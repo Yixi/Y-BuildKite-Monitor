@@ -11,7 +11,7 @@ dayjs.extend(relativeTime)
 const BuildHistory: React.FC<{ build: any }> = ({build}) => {
   const info = build?.node || {}
   return (
-    <div className={`pipeline__history-build ${info.state}`}>
+    <div className={`pipeline__history-build ${info.state}`} onClick={() => {window.open(info.url)}}>
       #{info.number}
     </div>
   )
@@ -31,7 +31,7 @@ const Pipeline: React.FC<{ pipeline: any, style?: React.CSSProperties }> = ({pip
     <div className="pipeline" style={style}>
       <div className={`pipeline__current ${lastBuild.state}`}>
         <div className="pipeline__title">
-          {pipeline?.node?.name}
+          <a href={lastBuild.url} target="_blank">{pipeline?.node?.name}</a>
         </div>
         <div className="pipeline__commit-info">
           [{startAt.format('MM-DD HH:mm')}] [{lastBuild.branch}] {lastBuild.message}
