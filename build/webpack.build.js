@@ -13,9 +13,13 @@ module.exports = {
     publicPath: "",
   },
   context: path.resolve(__dirname, "../src"),
-  devtool: "nosources-source-map",
   bail: true,
   mode: "production",
+  optimization: {
+    splitChunks: {
+      maxSize: 300000
+    }
+  },
   module: {
     rules: [
       {
@@ -51,12 +55,8 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|ogg|mp3)$/,
-        use: ["url-loader"],
-      },
-      {
-        test: /\.(svg?)(\?[a-z0-9]+)?$/,
-        use: ["url-loader"],
+        test: /\.(jpe?g|png|gif|ogg|mp3|svg)$/,
+        type: 'asset'
       },
     ]
   },
@@ -75,8 +75,9 @@ module.exports = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: path.resolve(__dirname, "../tsconfig.json"),
-      tslint: path.resolve(__dirname, "../tslint.json"),
+      typescript: {
+        configFile: path.resolve(__dirname, '../tsconfig.json'),
+      }
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
