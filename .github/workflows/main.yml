@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2.4.0
         with:
-          node-version: 12.x
+          node-version: '16'
       - name: yarn install
         run: |
           yarn install
@@ -23,8 +23,9 @@ jobs:
         run: |
           yarn build
       - name: deploy to github pages
-        uses: peaceiris/actions-gh-pages@v2
+        uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          email: lyh1112@gmail.com
+          build_dir: dist
